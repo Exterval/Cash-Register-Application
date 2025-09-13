@@ -50,7 +50,7 @@ h1{
 
 .screen input[type="number"]{
     margin-top: 15px;
-    width: 90%;
+    width: 87%;
 }
 
 .screen button{
@@ -65,6 +65,11 @@ h1{
 .screen button:hover{
     cursor: pointer;
     background-color: var(--text-color);
+}
+
+#change-due{
+    margin-top: 25px;
+    text-align: center;
 }
 
 
