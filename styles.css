@@ -1,0 +1,76 @@
+:root{
+    --bg-color: #A1C2BD;
+    --text-color: #708993;
+}
+
+*{
+    margin: 0;
+}
+
+body{
+    background: var(--bg-color); /*OVERRIDE*/
+    background: linear-gradient(90deg, rgba(112, 137, 147, 1) 0%, rgba(161, 194, 189, 1) 50%, rgba(231, 242, 239, 1) 100%);
+}
+
+h1{
+    text-align: center;
+    margin-top: 25px;
+    font-family: 'Cambria', serif;
+}
+
+.container{
+    display: flex;
+    margin-top: 35px;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.screen{
+    width: 250px;
+    height: 300px;
+    text-align: center;
+    background: rgba(255,255,255,0.15); box-shadow: 0 8px 32px rgba(85, 86, 104, 0.37);
+    padding-top: 15px;
+    border-radius: 10px;
+}
+
+.screen div{
+    display: flex;
+    background-color: aliceblue;
+    margin: auto;
+    width: 90%;
+    height: 200px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 7px;
+}
+
+.screen input[type="number"]{
+    margin-top: 15px;
+    width: 90%;
+}
+
+.screen button{
+    margin-top: 20px;
+    padding: 5px;
+    border: 0;
+    transition: all 0.3s;
+    background-color: #A1C2BD;
+    box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.334);
+}
+
+.screen button:hover{
+    cursor: pointer;
+    background-color: var(--text-color);
+}
+
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
