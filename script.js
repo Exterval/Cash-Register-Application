@@ -2,9 +2,9 @@
 let price = 3.26;
 
 const purchaseBtn = document.getElementById('purchase-btn');
-const change = document.getElementById('change-due');
 const cash = document.getElementById('cash');
 const due = document.getElementById('change-due');
+const display =  document.getElementById('display');
 
 let counterMoney =[
     ['PENNY', 1.01],
@@ -60,6 +60,14 @@ purchaseBtn.addEventListener('click',()=>{
 
 
 const update = arr =>{
-    
+    cash.value = '';
+    counterMoney.forEach(([name, num])=>{
+       const el = document.createElement('p');
+       el.innerText = `${name}: $${num}`;
+       display.appendChild(el);
+    });
 };
+
+update();
+
 
