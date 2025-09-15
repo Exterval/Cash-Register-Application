@@ -45,21 +45,36 @@ purchaseBtn.addEventListener('click',()=>{
         
         let change = cashDenum - priceDenum;
         console.log(counterMoneySum, change, cashDenum, priceDenum);
-        denums.forEach(el=>{
+        denums.forEach((el, ind)=>{
             while(el<=change && change > 0){
-            console.log(el);
-            values.push(el);
+            console.log(el, denumMoney[ind][0]);
+            values.push([denumMoney[ind][0], el]);
             change -= el;
             } 
         });
-        console.log(denumMoney, values);
-    }
+        
+        //to deduct in cashier
+        let ctr = 0;
+        denumMoney.forEach((el, ind)=>{
+           while(el[0] === values[ctr][0]){
+            el[1] -= values[ctr][1];
+            console.log(el, values[ctr]);
+            ctr++;
+            if(ctr === values.length){
+                break;
+            }
+        }
 
+        });
+    }
     
 });
 
-
+//DEBUG
 const update = arr =>{
+    if(arr){
+        
+    }
     cash.value = '';
     counterMoney.forEach(([name, num])=>{
        const el = document.createElement('p');
@@ -67,6 +82,7 @@ const update = arr =>{
        display.appendChild(el);
     });
 };
+//DEBUG
 
 update();
 
