@@ -4,6 +4,7 @@ let price = 3.26;
 const purchaseBtn = document.getElementById('purchase-btn');
 const change = document.getElementById('change-due');
 const cash = document.getElementById('cash');
+const due = document.getElementById('change-due');
 
 let counterMoney =[
     ['PENNY', 1.01],
@@ -22,12 +23,21 @@ purchaseBtn.addEventListener('click',()=>{
     const priceDenum = Math.round(Number(price)*100);
     const cashDenum = Math.round(Number(cash.value)*100);
     const counterMoneySum = counterMoney.reduce((prev, [_,num])=>prev+num,0)*100;
-    if(cashDenum > counterMoneySum) return alert('Insufficient funds inside counter.');
+
+    if(cashDenum > counterMoneySum){
+        due.innerText = "Status: INSUFFICIENT_FUNDS";
+        return alert('Insufficient funds inside counter.');
+    } 
+
+    if(cashDenum === counterMoneySum){
+        due.innerText = "Status: CLOSED";
+    } 
 
     if(cashDenum<priceDenum){
-        return alert('User does not have enough money to pay.');
+        cash.value = '';
+        return alert("Customer does not have enough money to purchase the item");
     }else if(cashDenum===priceDenum){
-        return alert('User payed off exact amount.');
+        due.innerText = "No change due - customer paid with exact cash";
     }else{
         const denums =[10000, 2000, 1000, 500, 100, 25, 10, 5, 1];
         let values = [];
@@ -46,5 +56,10 @@ purchaseBtn.addEventListener('click',()=>{
     }
 
     
-})
+});
+
+
+const update = arr =>{
+    
+};
 
