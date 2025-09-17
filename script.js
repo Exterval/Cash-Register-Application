@@ -30,7 +30,7 @@ purchaseBtn.addEventListener('click',()=>{
     } 
 
     if(cashDenum === counterMoneySum){
-        due.innerText = "Status: CLOSED";
+        return due.innerText = "Status: CLOSED";
     } 
 
     if(cashDenum<priceDenum){
@@ -64,28 +64,29 @@ purchaseBtn.addEventListener('click',()=>{
             }
         }
         });
-
-        update(denumMoney);
+        update(values, "OPEN");
     }
     
 });
 
-//DEBUG
-const update = arr =>{
+//DEBUG THIS AREA
+const update = (arr, status) =>{
     if(arr){
-       arr.reverse();
        console.log(arr);
-       
-       return;
+       arr.forEach(elem=>{
+        const target = counterMoney.find(([denumName])=>denumName === elem[0]);
+        target[1] -= elem[1]/100;
+       });
     }
     cash.value = '';
+    due.innerText += status ?  `STATUS: OPEN`: '' ;
     counterMoney.forEach(([name, num])=>{
-       const el = document.createElement('p');
-       el.innerText = `${name}: $${num}`;
-       display.appendChild(el);
+        const el = document.createElement('p');
+        el.innerText += `${name}: $${num}`;//theres a space here to format
+        display.appendChild(el);
     });
 };
-//DEBUG
+//DEBUG THIS AREA
 
 update();
 
