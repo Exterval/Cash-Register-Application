@@ -58,14 +58,14 @@ purchaseBtn.addEventListener('click',()=>{
         denumMoney.forEach((el, ind)=>{
            while(el[0] === values[ctr][0]){
             el[1] -= values[ctr][1];
-            console.log(el, values[ctr]);
             ctr++;
             if(ctr === values.length){
                 break;
             }
         }
-
         });
+
+        update(denumMoney);
     }
     
 });
@@ -73,7 +73,10 @@ purchaseBtn.addEventListener('click',()=>{
 //DEBUG
 const update = arr =>{
     if(arr){
-        
+       arr.reverse();
+       console.log(arr);
+       
+       return;
     }
     cash.value = '';
     counterMoney.forEach(([name, num])=>{
