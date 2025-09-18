@@ -42,17 +42,14 @@ purchaseBtn.addEventListener('click',()=>{
         const denums =[10000, 2000, 1000, 500, 100, 25, 10, 5, 1];
         let values = [];
         const denumMoney = counterMoney.map(([val, el])=>[val,Math.round(el*100)]).reverse();
-        
         let change = cashDenum - priceDenum;
-        console.log(counterMoneySum, change, cashDenum, priceDenum);
+        console.log("Change due: ",Math.round(change)/100);
         denums.forEach((el, ind)=>{
             while(el<=change && change > 0){
-            console.log(el, denumMoney[ind][0]);
             values.push([denumMoney[ind][0], el]);
             change -= el;
             } 
         });
-        
         //to deduct in cashier
         let ctr = 0;
         denumMoney.forEach((el, ind)=>{
@@ -64,22 +61,48 @@ purchaseBtn.addEventListener('click',()=>{
             }
         }
         });
-        update(values, "OPEN");
+
+        //remove dupes
+        const toSum = new Map();
+       values.forEach(arr => {
+        const key = arr[0]; // use first element as key
+        if (!toSum.has(key)) {
+            toSum.set(key, [...arr]); 
+        } else {
+            const exists = toSum.get(key);
+            exists[1] += arr[1];
+            toSum.set(key, exists);
+        }
+        });
+        values = Array.from(toSum.values()).map(arr => arr);
+        
+        //to display
+        due.innerText = 'STATUS: OPEN';
+        values.forEach(elem => due.innerText += `
+            ${elem[0]}: ${Math.floor(elem[1])/100}`);
+        
+    update(values);
     }
     
 });
 
 //DEBUG THIS AREA
-const update = (arr, status) =>{
+const update = (arr) =>{
     if(arr){
+        Array.from(display.children).forEach(elem=>{
+            if(elem.tagName !== 'H3'){
+                display.removeChild(elem);
+            }
+        });
        console.log(arr);
        arr.forEach(elem=>{
         const target = counterMoney.find(([denumName])=>denumName === elem[0]);
-        target[1] -= elem[1]/100;
+        target[1] = (Math.round(target[1] * 100) - Math.round(elem[1])) / 100;
+        console.log(target[1]);
        });
     }
     cash.value = '';
-    due.innerText += status ?  `STATUS: OPEN`: '' ;
+    
     counterMoney.forEach(([name, num])=>{
         const el = document.createElement('p');
         el.innerText += `${name}: $${num}`;//theres a space here to format
