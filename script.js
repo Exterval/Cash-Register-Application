@@ -1,4 +1,6 @@
 // CASH REGISTER APP
+
+//amount user needs to pay
 let price = 3.26;
 
 const purchaseBtn = document.getElementById('purchase-btn');
@@ -6,6 +8,7 @@ const cash = document.getElementById('cash');
 const due = document.getElementById('change-due');
 const display =  document.getElementById('display');
 
+//let as declared to change
 let counterMoney =[
     ['PENNY', 1.01],
   ['NICKEL', 2.05],
