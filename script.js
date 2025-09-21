@@ -1,16 +1,17 @@
 // CASH REGISTER APP
 
 //amount user needs to pay
-let price = 3.26;
+let price = 19.5;
 
 const purchaseBtn = document.getElementById('purchase-btn');
 const cash = document.getElementById('cash');
 const due = document.getElementById('change-due');
 const display =  document.getElementById('display');
+const priceDisplay = document.getElementById('price');
 
 //let as declared to change
 let counterMoney =
-    [["PENNY", 0.5], 
+    [["PENNY", 0.01], 
     ["NICKEL", 0], ["DIME", 0], 
     ["QUARTER", 0], ["ONE", 0], 
     ["FIVE", 0], ["TEN", 0], 
@@ -46,8 +47,8 @@ const update = (arr) =>{
         el.innerText += `${name}: $${num}`;//theres a space here to format
         display.appendChild(el);
     });
+    priceDisplay.innerText = `Price: $${price}`;
 };
-//DEBUG THIS AREA
 
 update();
 
@@ -55,26 +56,31 @@ function checkRegister(){
     const priceDenum = Math.round(Number(price)*100);
     const cashDenum = Math.round(Number(cash.value)*100);
     const counterMoneySum = counterMoney.reduce((prev, [_,num])=>prev+num,0)*100;
+    let isOpen = true;
+    let change = cashDenum - priceDenum;
     
-    if(cashDenum > counterMoneySum){
-        due.innerText = "Status: INSUFFICIENT_FUNDS";
-        return alert('Insufficient funds inside counter.');
+
+    if(counterMoneySum >= change){
+        due.innerText = "Status: CLOSED";
+        isOpen = false;
     } 
 
-    if(cashDenum === counterMoneySum){
-        return due.innerText = "Status: CLOSED";
-    } 
+    if(cashDenum > counterMoneySum && counterMoneySum < change){
+        due.innerText = "Status: INSUFFICIENT_FUNDS";
+        isOpen = false;
+        return alert('Insufficient funds inside counter.');
+    }
 
     if(cashDenum<priceDenum){
         cash.value = '';
         return alert("Customer does not have enough money to purchase the item");
     }else if(cashDenum===priceDenum){
         due.innerText = "No change due - customer paid with exact cash";
+        return;
     }else{
         const denums =[10000, 2000, 1000, 500, 100, 25, 10, 5, 1];
         const denumMoney = counterMoney.map(([val, el])=>[val,Math.round(el*100)]).reverse();
         let values = [];
-        let change = cashDenum - priceDenum;
         console.log("Change due: ",Math.round(change)/100);
 
         denums.forEach((denomValue, ind) => {
@@ -91,8 +97,12 @@ function checkRegister(){
         denumMoney[ind][1] -= amount;
     }
 });
-        
-        
+
+        if (change > 0) {
+    due.innerText = "Status: INSUFFICIENT_FUNDS";
+    return;
+  }
+
         //to deduct in cashier
         let ctr = 0;
         denumMoney.forEach((el)=>{
@@ -118,13 +128,13 @@ function checkRegister(){
         values = Array.from(toSum.values()).map(arr => arr);
         
         //to display
-        due.innerText = 'STATUS: OPEN';
+        due.innerText = isOpen ? 'STATUS: OPEN' : 'STATUS: CLOSED';
         values.forEach(elem => due.innerText += `
             ${elem[0]}: $${Math.floor(elem[1])/100}`);
         
     update(values);
-    console.log(counterMoney);
     }
     
 }
 
+  
